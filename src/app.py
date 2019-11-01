@@ -75,6 +75,9 @@ def force_login():
 def index():
     m = Mailgun()
     if request.method == 'POST':
+        vars = {}
+        for i in request.form.getlist('variable'):
+            vars[request.form.get('variable-%s' % i)] = request.form.get('value-%s' % i)
         r = m.post(
             '%s/messages' % app.config.get('MAILGUN_DOMAIN'),
             data={
@@ -83,6 +86,7 @@ def index():
                 'template': request.form.get('template'),
                 'to': request.form.get('list'),
                 'o:tag': request.form.get('template'),
+                'h:X-Mailgun-Variables': json.dumps(vars)
             }
         )
         print(r.json())

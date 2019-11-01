@@ -28,6 +28,9 @@
         <input type="text" name="from" id="from" class="form-control">
         <label for="subject">Předmět</label>
         <input type="text" name="subject" id="subject" class="form-control">
+        <div id="variables">
+            <a href="#" id="add-variable" data-last-id="0">Přidat proměnnou</a>
+        </div>
         <input type="submit" value="Odeslat" class="btn btn-success form-control">
     </form>
 
@@ -36,4 +39,24 @@
         <li><a href="https://beefree.io/editor">Editor mailů</a></li>
     </ul>
 </div>
+
+<script>
+    document.getElementById('add-variable').addEventListener('click', () => {
+        let id = Number(document.getElementById('add-variable').getAttribute('data-last-id'));
+        let variableDiv = document.createElement('div');
+        variableDiv.classList = "row";
+        variableDiv.innerHTML = `
+        <input type="hidden" name="variable" value="${id}">
+        <div class="col-sm-6">
+            <label for="variable-${id}">Proměnná</label>
+            <input type="text" name="variable-${id}" id="variable-${id}" class="form-control">
+        </div>
+        <div class="col-sm-6">
+            <label for="value">Hodnota</label>
+            <input type="text" name="value-${id}" id="value-${id}" class="form-control">
+        </div>`;
+        document.getElementById('add-variable').before(variableDiv);
+        document.getElementById('add-variable').setAttribute('data-last-id', id+1);
+    });
+</script>
 {% endblock %}
