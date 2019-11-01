@@ -109,9 +109,13 @@ def maillist(mail):
     if request.method == 'POST':
         if request.form.get('addresses') is not None:
             members = []
+            vars = {
+                request.form.get('variable'): request.form.get('value')
+            }
             for row in request.form.get('addresses').split('\n'):
                 members.append({
-                    'address': row
+                    'address': row,
+                    'vars': vars
                 })
             r = m.post(
                 'lists/%s/members.json' % mail,
@@ -120,6 +124,7 @@ def maillist(mail):
                     'members': json.dumps(members)
                 }
             )
+            print(r.json())
         else:
             vars = {}
             if request.form.get('variable', "") != "":
