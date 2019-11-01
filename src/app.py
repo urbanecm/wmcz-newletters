@@ -87,7 +87,10 @@ def index():
                 'to': request.form.get('list'),
                 'o:tag': request.form.get('template'),
                 'h:X-Mailgun-Variables': json.dumps(vars)
-            }
+            },
+            files=[
+                ('attachment', (request.files['attachment'].filename, request.files['attachment']))
+            ]
         )
         print(r.json())
     lists = m.get('lists').json()['items']

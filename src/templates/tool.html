@@ -9,7 +9,7 @@
     </ul>
 
     <h2>Poslat mail</h2>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <label for="list">Mailist</label>
         <select name="list" id="list" class="form-control">
             <option value="no" selected>---------------</option>
@@ -31,6 +31,8 @@
         <div id="variables">
             <a href="#" id="add-variable" data-last-id="0">Přidat proměnnou</a>
         </div>
+        <label for="file">Příloha</label>
+        <input type="file" name="attachment" id="attachment">
         <input type="submit" value="Odeslat" class="btn btn-success form-control">
     </form>
 
