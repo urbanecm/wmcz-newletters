@@ -114,11 +114,15 @@ def maillist(mail):
                 }
             )
         else:
+            vars = {}
+            if request.form.get('variable', "") != "":
+                vars[request.form.get('variable')] = request.form.get('value')
             m.post(
                 'lists/%s/members' % mail,
                 data={
                     'address': request.form.get('address'),
-                    'name': request.form.get('name')
+                    'name': request.form.get('name'),
+                    'vars': json.dumps(vars)
                 }
             )
     list = m.get('lists/%s' % mail).json()['list']
@@ -130,9 +134,17 @@ def maillist_member(mail, member):
     m = Mailgun()
     if request.method == 'POST':
         if request.form.get('type') == 'update':
+            vars = {}
+            for var in request.form.getlist('variable'):
+                name = request.form.get('variable-%s' % var)
+                if name != "":
+                    vars[name] = request.form.get('value-%s' % var)
+            if request.form.get('variable-new', '') != "":
+                vars[request.form.get('variable-new')] = request.form.get('value-new')
             m.put('lists/%s/members/%s' % (mail, member), data={
                 'name': request.form.get('name'),
-                'address': request.form.get('address')
+                'address': request.form.get('address'),
+                'vars': json.dumps(vars)
             })
         elif request.form.get('type') == 'delete':
             m.delete('lists/%s/members/%s' % (mail, member))

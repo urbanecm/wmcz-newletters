@@ -9,6 +9,31 @@
         <input type="text" name="name" id="name" class="form-control" value="{{member.name}}">
         <label for="address">Adresa</label>
         <input type="text" name="address" id="address" class="form-control" value="{{member.address}}">
+        <div class="variables">
+            {% for var in member.vars %}
+            <div class="row">
+                <input type="hidden" name="variable" value="{{var}}">
+                <div class="col-sm-6">
+                    <label for="variable-{{var}}">Proměnná</label>
+                    <input type="text" name="variable-{{var}}" id="variable-{{var}}" class="form-control" value="{{var}}">
+                </div>
+                <div class="col-sm-6">
+                    <label for="value-{{var}}">Hodnota</label>
+                    <input type="text" name="value-{{var}}" id="value-{{var}}" class="form-control" value="{{member.vars[var]}}">
+                </div>
+            </div>
+            {% endfor %}
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for="variable-new">Proměnná</label>
+                    <input type="text" name="variable-new" id="variable-new" class="form-control">
+                </div>
+                <div class="col-sm-6">
+                    <label for="value-new">Hodnota</label>
+                    <input type="text" name="value-new" id="value-new" class="form-control">
+                </div>
+            </div>
+        </div>
         <input type="submit" value="Odeslat" class="btn btn-primary form-control">
     </form>
     <form method="post">
