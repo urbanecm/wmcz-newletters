@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Vyberte akci</h2>
+    <ul>
+        <li><a href="{{ url_for("maillists") }}">Mailisty</a></li>
+        <li><a href="{{ url_for("templates") }}">Šablony</a></li>
+    </ul>
+
+    <h2>Poslat mail</h2>
+    <form method="post">
+        <label for="list">Mailist</label>
+        <select name="list" id="list" class="form-control">
+            <option value="no" selected>---------------</option>
+            {% for list in lists %}
+            <option value="{{list.address}}">{{list.name}} (členů {{list.members_count}})</option>
+            {% endfor %}
+        </select>
+        <label for="template">Šablona</label>
+        <select name="template" id="template" class="form-control">
+            <option value="no" selected>---------------</option>
+            {% for tmpl in tmpls %}
+            <option value="{{tmpl.name}}">{{tmpl.name}}</option>
+            {% endfor %}
+        </select>
+        <label for="from">From</label>
+        <input type="text" name="from" id="from" class="form-control">
+        <label for="subject">Předmět</label>
+        <input type="text" name="subject" id="subject" class="form-control">
+        <input type="submit" value="Odeslat" class="btn btn-success form-control">
+    </form>
+
+    <h2>Odkazy</h2>
+    <ul>
+        <li><a href="https://beefree.io/editor">Editor mailů</a></li>
+    </ul>
+</div>
+{% endblock %}

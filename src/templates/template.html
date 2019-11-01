@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>{{tmpl.name}}</h2>
+    <h3>Jednotlivé verze</h3>
+    <ol>
+        {% for version in tmpl.versions %}
+        <li><a href="{{url_for('template_version', template=tmpl.name, version=version.tag)}}">{{version.tag}}</a></li>
+        {% endfor %}
+    </ol>
+</div>
+{% endblock %}

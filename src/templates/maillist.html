@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>{{list.address}}</h1>
+    <h2>Informace o listu</h2>
+    <ul>
+        <li>Přístupová úroveň: {{list.access_level}}</li>
+        <li>Vytvořeno: {{list.created_at}}</li>
+        <li>Jméno: {{list.name}}</li>
+        <li>Popisek: {{list.description}}</li>
+    </ul>
+
+    <h2>Členové</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Jméno</th>
+                <th>Adresa</th>
+                <th>Akce</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in members %}
+            <tr>
+                <td>{{member.name}}</td>
+                <td>{{member.address}}</td>
+                <td>
+                    <a href="{{ url_for("maillist_member", mail=list.address, member=member.address)}}">Editovat</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h3>Přidat člena</h3>
+    <form method="post">
+        <label for="name">Jméno</label>
+        <input type="text" name="name" id="name" class="form-control">
+        <label for="address">Adresa</label>
+        <input type="text" name="address" id="address" class="form-control">
+        <input type="submit" value="Odeslat" class="btn btn-primary form-control">
+    </form>
+
+    <h3>Přidat více členů</h3>
+    <form method="post">
+        <label for="addresses">Adresy (jedna na řádek)</label>
+        <textarea name="addresses" id="addresses" class="form-control" rows="3" placeholder="Jméno &lt;adresa@domena.cz&gt;"></textarea>
+        <input type="submit" value="Přidat" class="btn btn-primary form-control">
+    </form>
+</div>
+{% endblock%}

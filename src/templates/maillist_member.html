@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>{{list.address}}: {{member.address}}</h2>
+    <form method="post">
+        <input type="hidden" name="type" value="update">
+        <label for="name">Jméno</label>
+        <input type="text" name="name" id="name" class="form-control" value="{{member.name}}">
+        <label for="address">Adresa</label>
+        <input type="text" name="address" id="address" class="form-control" value="{{member.address}}">
+        <input type="submit" value="Odeslat" class="btn btn-primary form-control">
+    </form>
+    <form method="post">
+        <input type="hidden" name="type" value="delete">
+        <input type="submit" value="Smazat" class="btn btn-danger form-control">
+    </form>
+</div>
+{% endblock %}

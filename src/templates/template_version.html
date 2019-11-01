@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h2>{{tmpl.name}}: {{tmpl.version.tag}}</h2>
+    <iframe src="{{ url_for('template_version_content', template=tmpl.name, version=tmpl.version.tag) }}" width="100%" height="500px"></iframe>
+</div>
+{% endblock %}

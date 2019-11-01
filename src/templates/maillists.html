@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Existující maillisty</h1>
+    <ul>
+        {% for list in lists %}
+        <li><a href="{{ url_for("maillist", mail=list.address) }}">{{list.address}}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

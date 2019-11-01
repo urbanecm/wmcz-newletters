@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WMCZ newsletters</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://tools-static.wmflabs.org/cdnjs/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://tools-static.wmflabs.org/cdnjs/ajax/libs/jquery/1.12.4/jquery.min.js"
+    integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
+    crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://tools-static.wmflabs.org/cdnjs/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <style>
+        .menuitem {
+            float: right !important;
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- navbar -->
+    <nav class="navbar navbar-inverse bg-faded" style="background-color:#337ab7;border-color: 2e6da4; border-radius: 0;">
+        <a class="navbar-brand" href="{{ url_for("index") }}" style="color: #fff">
+        WMCZ Newsletters
+        </a>
+
+        {% if logged %}
+        <a class="navbar-brand no-hover menuitem" href="{{ url_for('mwoauth.logout') }}">Odhlásit se</a>
+        <span class="navbar-brand no-hover menuitem" href="#">Vítejte, {{username}}</span>
+        {% else %}
+        <a class="navbar-brand no-hover menuitem" href="{{ url_for('mwoauth.login') }}">Přihlásit se</a>
+        {% endif %}
+    </nav>
+    {% block content %}{% endblock %}
+</body>
+</html>
