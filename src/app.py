@@ -68,7 +68,7 @@ def inject_base_variables():
 
 @app.before_request
 def force_login():
-    if not logged():
+    if not logged() and request.path != "/login" and not request.path.startswith("/oauth-callback"):
         return render_template('login.html')
 
 @app.route('/', methods=['GET', 'POST'])
@@ -112,9 +112,11 @@ def maillist(mail):
     if request.method == 'POST':
         if request.form.get('addresses') is not None:
             members = []
-            vars = {
-                request.form.get('variable'): request.form.get('value')
-            }
+            vars = {}
+            if request.form.get('variable') != '':
+                vars = {
+                    request.form.get('variable'): request.form.get('value')
+                }
             for row in request.form.get('addresses').split('\n'):
                 members.append({
                     'address': row,
