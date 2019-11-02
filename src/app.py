@@ -78,16 +78,19 @@ def index():
         vars = {}
         for i in request.form.getlist('variable'):
             vars[request.form.get('variable-%s' % i)] = request.form.get('value-%s' % i)
+        data = {
+            'from': request.form.get('from'),
+            'subject': request.form.get('subject'),
+            'template': request.form.get('template'),
+            'to': request.form.get('list'),
+            'o:tag': request.form.get('template'),
+            'h:X-Mailgun-Variables': json.dumps(vars)
+        }
+        if request.form.get('replyto', '') != "":
+            data['h:Reply-To'] = request.form.get('replyto')
         r = m.post(
             '%s/messages' % app.config.get('MAILGUN_DOMAIN'),
-            data={
-                'from': request.form.get('from'),
-                'subject': request.form.get('subject'),
-                'template': request.form.get('template'),
-                'to': request.form.get('list'),
-                'o:tag': request.form.get('template'),
-                'h:X-Mailgun-Variables': json.dumps(vars)
-            },
+            data=data,
             files=[
                 ('attachment', (request.files['attachment'].filename, request.files['attachment']))
             ]
