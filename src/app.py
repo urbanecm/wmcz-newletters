@@ -88,12 +88,13 @@ def index():
         }
         if request.form.get('replyto', '') != "":
             data['h:Reply-To'] = request.form.get('replyto')
+        files = []
+        if request.files['attachment'].filename != '':
+            files.append(('attachment', (request.files['attachment'].filename, request.files['attachment'])))
         r = m.post(
             '%s/messages' % app.config.get('MAILGUN_DOMAIN'),
             data=data,
-            files=[
-                ('attachment', (request.files['attachment'].filename, request.files['attachment']))
-            ]
+            files=files
         )
         print(r.json())
     lists = m.get('lists').json()['items']
