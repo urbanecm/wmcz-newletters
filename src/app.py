@@ -118,10 +118,15 @@ def maillist(mail):
                 vars = {
                     request.form.get('variable'): request.form.get('value')
                 }
-            for row in request.form.get('addresses').split('\n'):
+            for row_raw in request.form.get('addresses').split('\n'):
+                row = row_raw.split('|')
+                specific_vars = json.loads(row[1])
+                total_vars = {}
+                total_vars.update(vars)
+                total_vars.update(specific_vars)
                 members.append({
-                    'address': row,
-                    'vars': vars
+                    'address': row[0],
+                    'vars': total_vars
                 })
             r = m.post(
                 'lists/%s/members.json' % mail,
