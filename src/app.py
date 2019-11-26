@@ -120,7 +120,10 @@ def maillist(mail):
                 }
             for row_raw in request.form.get('addresses').split('\n'):
                 row = row_raw.split('|')
-                specific_vars = json.loads(row[1])
+                if len(row) == 2:
+                    specific_vars = json.loads(row[1])
+                else:
+                    specific_vars = {}
                 total_vars = {}
                 total_vars.update(vars)
                 total_vars.update(specific_vars)
